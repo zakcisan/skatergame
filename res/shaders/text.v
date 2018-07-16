@@ -1,7 +1,6 @@
-#version 150 core
-in vec2 position;
-in vec2 textureCoordinate;
-out vec2 texCoord;
+attribute vec2 position;
+attribute vec2 textureCoordinate;
+varying vec2 texCoord;
 uniform mat4 matrix;
 void main()
 {
