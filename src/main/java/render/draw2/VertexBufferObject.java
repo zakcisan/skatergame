@@ -31,7 +31,7 @@ public class VertexBufferObject
                 -0.5f, +0.5f,
                 -0.5f, -0.5f
         }, 6, GL_TRIANGLES, new ArrayList<VertexBufferObject.Attribute>(Arrays.asList(
-                new VertexBufferObject.Attribute(0, 2, 2, 0))));
+                new VertexBufferObject.Attribute("position", 2, 2, 0))));
     }
 
     public static RenderFunction[] initializeDefaultTextured(RenderContext context)
@@ -44,8 +44,8 @@ public class VertexBufferObject
                 -0.5f, +0.5f, 0.0f, 1.0f,
                 -0.5f, -0.5f, 0.0f, 0.0f
         }, 6, GL_TRIANGLES, new ArrayList<VertexBufferObject.Attribute>(Arrays.asList(
-                new VertexBufferObject.Attribute(0, 2, 4, 0),
-                new VertexBufferObject.Attribute(1, 2, 4, 2))));
+                new VertexBufferObject.Attribute("position", 2, 4, 0),
+                new VertexBufferObject.Attribute("textureCoordinate", 2, 4, 2))));
     }
 
     /** four functions, 0 is bind, 1 is draw, 2 is unbind, 3 is delete */
@@ -114,9 +114,10 @@ public class VertexBufferObject
                     glBindBuffer(GL_ARRAY_BUFFER, buffer);
                     for (int i = 0; i < attributes.size(); i++)
                     {
-                        glEnableVertexAttribArray(attributes.get(i).pointer);
+                        int ptr = context1.vertexAttribute.get(attributes.get(i).pointer);
+                        glEnableVertexAttribArray(ptr);
                         glVertexAttribPointer(
-                                attributes.get(i).pointer,
+                                ptr,
                                 attributes.get(i).size,
                                 GL_FLOAT,
                                 false,
@@ -133,7 +134,7 @@ public class VertexBufferObject
                     // unbind
                     for(int i = 0; i < attributes.size(); i++)
                     {
-                        glDisableVertexAttribArray(attributes.get(i).pointer);
+                        glDisableVertexAttribArray(context1.vertexAttribute.get(attributes.get(i).pointer));
                     }
                 },
                 context1 -> {
@@ -145,12 +146,12 @@ public class VertexBufferObject
 
     public static class Attribute
     {
-        public int pointer;
+        public String pointer;
         public int size;
         public int stride;
         public int offset;
 
-        public Attribute(int pointer, int size, int stride, int offset)
+        public Attribute(String pointer, int size, int stride, int offset)
         {
             this.pointer = pointer;
             this.size = size;

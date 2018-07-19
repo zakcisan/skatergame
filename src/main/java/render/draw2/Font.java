@@ -133,8 +133,8 @@ public class Font
                 }
                 vertices.flip();
                 ArrayList<VertexBufferObject.Attribute> attributes = new ArrayList<>();
-                attributes.add(new VertexBufferObject.Attribute(0, 2, 4, 0));
-                attributes.add(new VertexBufferObject.Attribute(1, 2, 4, 2));
+                attributes.add(new VertexBufferObject.Attribute("position", 2, 4, 0));
+                attributes.add(new VertexBufferObject.Attribute("textureCoordinate", 2, 4, 2));
                 vbo = VertexBufferObject.initialize(context, vertices, CHAR_COUNT * 6, GL_TRIANGLES, attributes);
                 Utility.checkGLError("Generating Vertex Buffer Object: " + path);
             }

@@ -4,6 +4,7 @@ import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.FloatBuffer;
+import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -18,7 +19,11 @@ public class ShaderSimple
         int uMatrix = glGetUniformLocation(program, "matrix");
         int uColor = glGetUniformLocation(program, "color");
 
+        HashMap<String, Integer> attrib = new HashMap<>();
+        attrib.put("position", glGetAttribLocation(program, "position"));
+
         return context1 -> {
+            context1.vertexAttribute = attrib;
             try (MemoryStack stack = MemoryStack.stackPush())
             {
                 FloatBuffer buffer = stack.mallocFloat(16);

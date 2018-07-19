@@ -3,6 +3,7 @@ package render.draw2;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.FloatBuffer;
+import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBindTexture;
@@ -25,7 +26,12 @@ public class ShaderTexture
         int uColor = glGetUniformLocation(program, "color");
         int uTex = glGetUniformLocation(program, "tex");
 
+        HashMap<String, Integer> attrib = new HashMap<>();
+        attrib.put("position", glGetAttribLocation(program, "position"));
+        attrib.put("textureCoordinate", glGetAttribLocation(program, "textureCoordinate"));
+
         return context1 -> {
+            context1.vertexAttribute = attrib;
             try (MemoryStack stack = MemoryStack.stackPush())
             {
                 FloatBuffer buffer = stack.mallocFloat(16);

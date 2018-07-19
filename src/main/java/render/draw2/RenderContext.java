@@ -6,6 +6,7 @@ import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -22,6 +23,7 @@ public class RenderContext
     public int activeTexture = 0; // avoid changing this
     public String text = "";
     public double fontX = 0, fontY = 0;
+    public Map<String, Integer> vertexAttribute;
 
     public TextureLibrary textures;
 
